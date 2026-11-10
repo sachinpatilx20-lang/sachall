@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SACH.IN</title>
-    <style>
-      .container {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        max-width: 400px;
-        margin: 20px auto;
-      }
-      .box {
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 12px 16px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-        text-align: center;
-        background: #fff;
-      }
-      .box a {
-        color: #0066cc;
-        text-decoration: none;
-        word-break: break-all;
-      }
-      .box a:hover {
-        text-decoration: underline;
-      }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SACH.IN</title>
+  <style>
+    .container { display: flex; flex-direction: column; gap: 12px; max-width: 400px; margin: 20px auto; }
+    .box, form { border: 1px solid #ccc; border-radius: 8px; padding: 12px 16px; box-shadow: 0 2px 4px rgba(0,0,0,.08); text-align: center; background: #fff; }
+    .box a { color: #0066cc; text-decoration: none; word-break: break-all; }
+    form { display: flex; gap: 8px; padding: 8px; }
+    input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+    button { background: #0066cc; color: #fff; border: 0; padding: 8px 14px; border-radius: 4px; cursor: pointer; }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="box"><a href="https://sachplay.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachplay.vercel.app/</a></div>
-  <div class="box"><a href="https://sachurl.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachurl.vercel.app/</a></div>
-  <div class="box"><a href="https://sachimdb.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachimdb.vercel.app/</a></div>
-  <div class="box"><a href="https://sachsearch.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachsearch.vercel.app/</a></div>
-  <div class="box"><a href="https://sachsynk.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachsynk.vercel.app/</a></div>
-  <div class="box"><a href="https://sachplayer.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachplayer.vercel.app/</a></div>
-  <div class="box"><a href="https://sachplan.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachplan.vercel.app/</a></div>
-  <div class="box"><a href="https://sachcast.vercel.app/" target="_blank" rel="noopener noreferrer">https://sachcast.vercel.app/</a></div>
+<div class="container" id="list">
+  <form onsubmit="event.preventDefault(); add(u.value); u.value='';">
+    <input id="u" placeholder="" required>
+    <button>Add</button>
+  </form>
+  <div class="box"><a href="https://sachplay.vercel.app/" target="_blank">https://sachplay.vercel.app/</a></div>
+  <div class="box"><a href="https://sachurl.vercel.app/" target="_blank">https://sachurl.vercel.app/</a></div>
+  <div class="box"><a href="https://sachimdb.vercel.app/" target="_blank">https://sachimdb.vercel.app/</a></div>
+  <div class="box"><a href="https://sachsearch.vercel.app/" target="_blank">https://sachsearch.vercel.app/</a></div>
+  <div class="box"><a href="https://sachsynk.vercel.app/" target="_blank">https://sachsynk.vercel.app/</a></div>
+  <div class="box"><a href="https://sachplayer.vercel.app/" target="_blank">https://sachplayer.vercel.app/</a></div>
+  <div class="box"><a href="https://sachplan.vercel.app/" target="_blank">https://sachplan.vercel.app/</a></div>
+  <div class="box"><a href="https://sachcast.vercel.app/" target="_blank">https://sachcast.vercel.app/</a></div>
 </div>
+<script>
+  function add(url) {
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    document.getElementById('list').insertAdjacentHTML('beforeend', `<div class="box"><a href="${url}" target="_blank">${url}</a></div>`);
+    localStorage.setItem('extra_links', (localStorage.getItem('extra_links') || '') + url + '\n');
+  }
+  (localStorage.getItem('extra_links') || '').trim().split('\n').filter(Boolean).forEach(u => add(u));
+</script>
 </body>
 </html>
